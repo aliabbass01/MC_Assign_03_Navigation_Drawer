@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_quiz">
+
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="com.example.assign_03_navigation_drawer.ui.quiz.QuizFragment"
+        android:label="Quiz system"
+        tools:layout="@layout/fragment_quiz" />
+
+    <fragment
+        android:id="@+id/nav_calculator"
+        android:name="com.example.assign_03_navigation_drawer.ui.calculator.CalculatorFragment"
+        android:label="Calculator"
+        tools:layout="@layout/fragment_calculator" />
+</navigation>
