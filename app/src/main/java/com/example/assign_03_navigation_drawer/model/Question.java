@@ -1,17 +1,19 @@
 package com.example.assign_03_navigation_drawer.model;
 
-public class Question
+import java.io.Serializable;
+
+public class Question implements Serializable
 {
     String question;
     String option1;
     String option2;
     String option3;
     String option4;
-    String answer;
+    int answer;
 
     public Question() {}
 
-    public Question(String question, String option1, String option2, String option3, String option4, String answer)
+    public Question(String question, String option1, String option2, String option3, String option4, int answer)
     {
         this.question = question;
         this.option1 = option1;
@@ -61,11 +63,11 @@ public class Question
         this.option4 = option4;
     }
 
-    public String getAnswerNum() {
+    public int getAnswerNum() {
         return answer;
     }
 
-    public void setAnswerNum(String answerNum) {
+    public void setAnswerNum(int answerNum) {
         this.answer = answerNum;
     }
 }

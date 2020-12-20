@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.assign_03_navigation_drawer.R;
 import com.example.assign_03_navigation_drawer.model.Question;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ public class QuestionsActivity extends AppCompatActivity
     private RadioButton radioButton4;
     private Button goToNextQuestion;
     private List<Question> questionList;
+    private List<Question> questionListToSend;
     private int totalQuestions;
     private int questionCounter;
     private Question currentQuestion;
@@ -62,6 +64,7 @@ public class QuestionsActivity extends AppCompatActivity
         totalQuestions = Integer.parseInt(getIntent().getExtras().getString("count"));
 
         questionList = new ArrayList<>();
+        questionListToSend = new ArrayList<>();
 
         currentQuestion = new Question();
 
@@ -96,7 +99,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q1_op_2 = "Google";
         String q1_op_3 = "Microsoft";
         String q1_op_4 = "Android Inc";
-        String q1_ans = "Android Inc";
+        int q1_ans = 4;
 
         Question question1 = new Question(q1, q1_op_1, q1_op_2, q1_op_3, q1_op_4, q1_ans);
         questionList.add(question1);
@@ -106,7 +109,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q2_op_2 = "Open-source Webkit";
         String q2_op_3 = "Safari";
         String q2_op_4 = "Firefox";
-        String q2_ans = "Open-source Webkit";
+        int q2_ans = 2;
 
         Question question2 = new Question(q2, q2_op_1, q2_op_2, q2_op_3, q2_op_4, q2_ans);
         questionList.add(question2);
@@ -116,7 +119,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q3_op_2 = "Android Asset Providing Tool";
         String q3_op_3 = "Android Asset Packaging Tool";
         String q3_op_4 = "Android Asset Packaging Technique";
-        String q3_ans = "Android Asset Packaging Tool";
+        int q3_ans = 3;
 
         Question question3 = new Question(q3, q3_op_1, q3_op_2, q3_op_3, q3_op_4, q3_ans);
         questionList.add(question3);
@@ -126,7 +129,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q4_op_2 = "Windows";
         String q4_op_3 = "Mac";
         String q4_op_4 = "RedHat";
-        String q4_ans = "Linux";
+        int q4_ans = 1;
 
         Question question4 = new Question(q4, q4_op_1, q4_op_2, q4_op_3, q4_op_4, q4_ans);
         questionList.add(question4);
@@ -136,7 +139,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q5_op_2 = "Android Driver Bridge";
         String q5_op_3 = "Android Delete Bridge";
         String q5_op_4 = "Android Destroy Bridge";
-        String q5_ans = "Android Debug Bridge";
+        int q5_ans = 1;
 
         Question question5 = new Question(q5, q5_op_1, q5_op_2, q5_op_3, q5_op_4, q5_ans);
         questionList.add(question5);
@@ -146,7 +149,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q6_op_2 = "Log message is used to debug a program";
         String q6_op_3 = "Same as Toast().";
         String q6_op_4 = "None of these";
-        String q6_ans = "Log message is used to debug a program";
+        int q6_ans = 2;
 
         Question question6 = new Question(q6, q6_op_1, q6_op_2, q6_op_3, q6_op_4, q6_ans);
         questionList.add(question6);
@@ -156,7 +159,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q7_op_2 = "Web client";
         String q7_op_3 = "Operating system";
         String q7_op_4 = "None od these";
-        String q7_ans = "Operating system";
+        int q7_ans = 3;
 
         Question question7 = new Question(q7, q7_op_1, q7_op_2, q7_op_3, q7_op_4, q7_ans);
         questionList.add(question7);
@@ -166,7 +169,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q8_op_2 = "Open Handset Application";
         String q8_op_3 = "Open Handset Association";
         String q8_op_4 = "Open Handset Animation";
-        String q8_ans = "Open Handset Alliance";
+        int q8_ans = 1;
 
         Question question8 = new Question(q8, q8_op_1, q8_op_2, q8_op_3, q8_op_4, q8_ans);
         questionList.add(question8);
@@ -176,7 +179,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q9_op_2 = "Context";
         String q9_op_3 = "ActivityGroup";
         String q9_op_4 = "ActivityThemeWrapper";
-        String q9_ans = "ActivityThemeWrapper";
+        int q9_ans = 4;
 
         Question question9 = new Question(q9, q9_op_1, q9_op_2, q9_op_3, q9_op_4, q9_ans);
         questionList.add(question9);
@@ -186,7 +189,7 @@ public class QuestionsActivity extends AppCompatActivity
         String q10_op_2 = "Property file";
         String q10_op_3 = "Manifest file";
         String q10_op_4 = "Java source file";
-        String q10_ans = "Manifest file";
+        int q10_ans = 3;
 
         Question question10 = new Question(q10, q10_op_1, q10_op_2, q10_op_3, q10_op_4, q10_ans);
         questionList.add(question10);
@@ -197,11 +200,13 @@ public class QuestionsActivity extends AppCompatActivity
         countDownTimer.cancel();
         RadioButton selected = findViewById(radioGroup.getCheckedRadioButtonId());
 
-        String ans = selected.getText().toString();
+        int ans = radioGroup.indexOfChild(selected) + 1;
         if (ans == currentQuestion.getAnswerNum())
         {
             score++;
         }
+
+        questionListToSend.add(currentQuestion);
     }
 
     private void ShowNextQuestion()
@@ -229,6 +234,8 @@ public class QuestionsActivity extends AppCompatActivity
             Intent resultIntent = new Intent(QuestionsActivity.this, ResultActivity.class);
             resultIntent.putExtra("score", ""+score);
             resultIntent.putExtra("name", name);
+            resultIntent.putExtra("total", totalQuestions);
+            resultIntent.putExtra("list", (Serializable) questionListToSend);
             startActivity(resultIntent);
             this.finish();
         }

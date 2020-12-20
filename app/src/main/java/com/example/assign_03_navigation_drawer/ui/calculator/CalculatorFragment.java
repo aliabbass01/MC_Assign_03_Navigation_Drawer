@@ -145,7 +145,7 @@ public class CalculatorFragment extends Fragment
                 setValueInEditText(9);
             }
         });
-        
+
         btnAdd.setOnClickListener(new View.OnClickListener()
         {
             @Override
